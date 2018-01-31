@@ -5,8 +5,8 @@ from torch.utils.data.sampler import Sampler
 import spacy
 from spacy.symbols import ORTH
 
-# re_br = re.compile(r'<\s*br\s*/?>', re.IGNORECASE)
-# def sub_br(x): return re_br.sub("\n", x)
+re_br = re.compile(r'<\s*br\s*/?>', re.IGNORECASE)
+def sub_br(x): return re_br.sub("\n", x)
 
 my_tok = spacy.load('en')
 my_tok.tokenizer.add_special_case('<eos>', [{ORTH: '<eos>'}])
@@ -23,10 +23,7 @@ my_tok.tokenizer.add_special_case('*EMAIL*', [{ORTH: '*EMAIL*'}])
 my_tok.tokenizer.add_special_case('*PHONE*', [{ORTH: '*PHONE*'}])
 my_tok.tokenizer.add_special_case('*NUMBER*', [{ORTH: '*NUMBER*'}])
 
-# we're already cleaning the html, no need for sub_br()
-def spacy_tok(x): return [tok.text for tok in my_tok.tokenizer(x)]
-
-# def spacy_tok(x): return [tok.text for tok in my_tok.tokenizer(sub_br(x))]
+def spacy_tok(x): return [tok.text for tok in my_tok.tokenizer(sub_br(x))]
 
 re_tok = re.compile(f'([{string.punctuation}“”¨«»®´·º½¾¿¡§£₤‘’])')
 def tokenize(s): return re_tok.sub(r' \1 ', s).split()
