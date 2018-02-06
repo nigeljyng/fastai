@@ -8,7 +8,7 @@ from spacy.symbols import ORTH
 re_br = re.compile(r'<\s*br\s*/?>', re.IGNORECASE)
 def sub_br(x): return re_br.sub("\n", x)
 
-my_tok = spacy.load('en')
+my_tok = spacy.load('en_core_web_sm')
 my_tok.tokenizer.add_special_case('<eos>', [{ORTH: '<eos>'}])
 my_tok.tokenizer.add_special_case('<bos>', [{ORTH: '<bos>'}])
 my_tok.tokenizer.add_special_case('<unk>', [{ORTH: '<unk>'}])
